@@ -61,16 +61,15 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      Response response = await http.get(
-          BASE_URL + 'user/loginUser?id=' + admnNo + '&password=' + password);
+      Response response = await http.post(BASE_URL + 'users/login', body: mp);
       Map<String, dynamic> parsedResponse;
       parsedResponse = json.decode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (parsedResponse['success']) {
-        prefs.setString('token', parsedResponse['jwt']);
+        prefs.setString('token', parsedResponse['token']);
         prefs.setString('currentUser', json.encode(parsedResponse['user']));
         user = User.fromMap(parsedResponse['user']);
-        token = parsedResponse['jwt'];
+        token = parsedResponse['token'];
         status = AuthStatus.Authenticated;
       } else {
         error = parsedResponse['error'];
@@ -87,8 +86,8 @@ class AuthProvider extends ChangeNotifier {
     refreshing = true;
     notifyListeners();
     try {
-      Response response = await http.get(
-          BASE_URL + 'user/getById?jwt=' + this.token + '&id=' + user.admnNo);
+      Response response = await http.get(BASE_URL + 'user/' + user.admnNo,
+          headers: getHeaders());
       Map<String, dynamic> parsedResponse;
       parsedResponse = json.decode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
