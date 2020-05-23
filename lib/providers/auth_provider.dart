@@ -29,6 +29,10 @@ class AuthProvider extends ChangeNotifier {
     _init();
   }
 
+  String getToken(){
+    return this.token;
+  }
+
   Map<String, String> getHeaders() {
     Map<String, String> mp = Map();
     mp['Authorization'] = 'Bearer ' + this.token;
@@ -61,8 +65,10 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      Response response = await http.get(
-          BASE_URL + 'user/loginUser?id=' + admnNo + '&password=' + password);
+      Response response = await http.post(
+        BASE_URL + 'user/login.php?id=' + admnNo + '&password=' + password,
+        body: {'id': admnNo, 'password': password},
+      );
       Map<String, dynamic> parsedResponse;
       parsedResponse = json.decode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -87,8 +93,10 @@ class AuthProvider extends ChangeNotifier {
     refreshing = true;
     notifyListeners();
     try {
-      Response response = await http.get(
-          BASE_URL + 'user/getById?jwt=' + this.token + '&id=' + user.admnNo);
+      Response response = await http.post(
+        BASE_URL + 'user/getById.php',
+        body: {'jwt': this.token, 'id': user.admnNo},
+      );
       Map<String, dynamic> parsedResponse;
       parsedResponse = json.decode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();

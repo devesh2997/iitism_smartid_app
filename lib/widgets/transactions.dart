@@ -3,7 +3,6 @@ import 'package:iitism_smartid_app/data/transactions_repository.dart';
 import 'package:iitism_smartid_app/models/transaction.dart';
 import 'package:iitism_smartid_app/utils/index.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class TransactionList extends StatelessWidget {
   @override
@@ -58,10 +57,7 @@ class TransactionList extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: <Widget>[
-                      SvgPicture.asset(
-                        'assets/images/empty.svg',
-                        width: size.width * 0.75,
-                      ),
+                      Text('Put empty asset here'),
                       SizedBox(
                         height: 20,
                       ),

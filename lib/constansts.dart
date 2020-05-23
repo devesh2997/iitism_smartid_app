@@ -1,1 +1,1 @@
-const String BASE_URL = 'https://b20a7121.ngrok.io/v1/';
+const String BASE_URL = 'https://iitism-smartid.000webhostapp.com/';

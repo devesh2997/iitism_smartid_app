@@ -26,7 +26,7 @@ class User {
 
   factory User.fromMap(Map map) {
     return User(
-        admnNo: map['admn_no'] ?? '',
+        admnNo: map['id'] ?? '',
         firstName: map['first_name'] ?? '',
         middleName: map['middle_name'] ?? '',
         lastName: map['last_name'],

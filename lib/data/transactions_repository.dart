@@ -26,11 +26,12 @@ class TransactionRepository extends ChangeNotifier {
     status = Status.Loading;
     notifyListeners();
     try {
-      User user = authProvider.user;
       if (authProvider.status == AuthStatus.Authenticated) {
-        Response response = await http.get(
-            BASE_URL + 'user/transactions/' + user.admnNo,
-            headers: authProvider.getHeaders());
+        Response response = await http.post(
+            BASE_URL + 'user/transactions.php',body: {
+              'jwt':authProvider.getToken(),
+              'id':authProvider.user.admnNo
+            });
         Map<String, dynamic> parsedResponse;
         parsedResponse = json.decode(response.body);
         if (parsedResponse['success']) {
